@@ -1,14 +1,18 @@
 const playBtn = document.getElementById("play");
+const mainTitle = document.querySelector(".main-title");
 const grid = document.querySelector(".grid");
 const difficultyInput = document.getElementById("difficulty");
 
 playBtn.addEventListener("click", function () {
+    mainTitle.classList.add("hidden");
+    grid.classList.remove("hidden");
     grid.innerHTML = "";
     selectedDifficulty = difficultyInput.value;
     const squaresNumber = calculateSquareNumber(selectedDifficulty);
     const randomArray = generateRandomArray(squaresNumber);
     for (let i = 0; i < randomArray.length; i++) {
         const thisSquare = createSquare(randomArray[i], selectedDifficulty);
+        thisSquare.addEventListener("click", handleSquareClick);
         grid.append(thisSquare);
     }
 });
@@ -40,6 +44,11 @@ function calculateSquareNumber (difficulty) {
         calculatedNumber = 49;
     }
     return calculatedNumber;
+}
+
+function handleSquareClick() {
+    this.classList.add("clicked");
+    console.log(this.textContent);
 }
 
 function getRndInteger(min, max) {
